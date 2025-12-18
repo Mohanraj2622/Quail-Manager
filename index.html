@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +18,7 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            transition: background-color 0.3s;
         }
         
         .container {
@@ -32,16 +34,140 @@
             border-radius: 0 0 15px 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            position: relative;
         }
         
         .app-title {
             font-size: 1.8rem;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .app-subtitle {
             font-size: 0.9rem;
             opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .menu-toggle {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        /* Module Selection Menu */
+        .module-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .module-menu {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 3px solid transparent;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+        
+        .module-card.active {
+            border-color: #2ecc71;
+            background: linear-gradient(135deg, #f8fff9, #ffffff);
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .module-card.active .module-icon {
+            color: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        
+        .module-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .module-desc {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        /* Module Container */
+        .module-container {
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+        
+        .module-container.active {
+            display: block;
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .back-to-menu {
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-menu:hover {
+            background: #95a5a6;
+            transform: translateX(-5px);
         }
         
         .dashboard {
@@ -132,6 +258,11 @@
             color: white;
         }
         
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
         .btn:hover {
             opacity: 0.9;
             transform: scale(1.05);
@@ -157,6 +288,9 @@
         .input-group label {
             font-weight: 600;
             color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .input-group input, .input-group select {
@@ -164,6 +298,13 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         .results-container {
@@ -172,6 +313,7 @@
             padding: 15px;
             border-radius: 10px;
             border-left: 5px solid #3498db;
+            animation: fadeIn 0.5s ease;
         }
         
         .result-item {
@@ -274,6 +416,63 @@
             color: #7f8c8d;
             font-size: 0.9rem;
             margin-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Data Management */
+        .data-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .data-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .module-data-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .data-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 0.5s ease;
         }
         
         /* Responsive adjustments */
@@ -293,6 +492,10 @@
             .counter-value {
                 font-size: 4.5rem;
             }
+            
+            .data-actions {
+                flex-wrap: nowrap;
+            }
         }
         
         @media (min-width: 992px) {
@@ -305,200 +508,530 @@
                 margin: 0 auto;
             }
         }
-        
-        /* Animation for counter changes */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .pulse {
-            animation: pulse 0.5s ease;
-        }
     </style>
 </head>
 <body>
     <header>
         <h1 class="app-title"><i class="fas fa-dove"></i> Quail Farm Manager</h1>
-        <p class="app-subtitle">Track your quails, calculate optimal sales dates, and maximize profits</p>
+        <p class="app-subtitle">Select a module to get started, or toggle menu view</p>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
     
     <div class="container">
-        <div class="dashboard">
-            <!-- Tally Counter Card -->
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-calculator"></i> Quail Counter</h2>
-                <div class="counter-container">
-                    <div class="counter-value" id="quailCount">0</div>
-                    <div class="counter-controls">
-                        <button class="btn btn-success" id="addQuail">
-                            <i class="fas fa-plus"></i> Add
+        <!-- Module Selection Menu -->
+        <div class="module-menu" id="moduleMenu">
+            <div class="module-card active" data-module="counter">
+                <div class="module-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3 class="module-title">Quail Counter</h3>
+                <p class="module-desc">Track quail inventory with tally counter</p>
+            </div>
+            
+            <div class="module-card" data-module="calculator">
+                <div class="module-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3 class="module-title">Sales Calculator</h3>
+                <p class="module-desc">Calculate optimal sales dates and age</p>
+            </div>
+            
+            <div class="module-card" data-module="profit">
+                <div class="module-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="module-title">Profit & Loss</h3>
+                <p class="module-desc">Calculate profitability and costs</p>
+            </div>
+            
+            <div class="module-card" data-module="actions">
+                <div class="module-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="module-title">Quick Actions</h3>
+                <p class="module-desc">Save, reset, and manage farm data</p>
+            </div>
+        </div>
+        
+        <!-- Quail Counter Module -->
+        <div class="module-container active" id="counterModule">
+            <div class="module-header">
+                <h2><i class="fas fa-calculator"></i> Quail Counter</h2>
+                <button class="back-to-menu">
+                    <i class="fas fa-arrow-left"></i> Back to Menu
+                </button>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-calculator"></i> Quail Counter</h3>
+                    <div class="counter-container">
+                        <div class="counter-value" id="quailCount">0</div>
+                        <div class="counter-controls">
+                            <button class="btn btn-success" id="addQuail">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                            <button class="btn btn-danger" id="removeQuail">
+                                <i class="fas fa-minus"></i> Less
+                            </button>
+                        </div>
+                        <p style="margin-top: 15px; text-align: center; color: #7f8c8d;">
+                            Count quails in cages. Tap buttons to adjust.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-info-circle"></i> Counter Information</h3>
+                    <div class="results-container">
+                        <p>This module tracks your total quail inventory. Use it to:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Track daily quail counts</li>
+                            <li>Monitor inventory changes</li>
+                            <li>Keep separate data from other modules</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Counter Data Management -->
+            <div class="data-section">
+                <h3><i class="fas fa-database"></i> Counter Module Data</h3>
+                <div class="module-data-info" id="counterDataInfo">
+                    Loading data...
+                </div>
+                <div class="data-actions">
+                    <button class="btn btn-info" id="saveCounterData">
+                        <i class="fas fa-save"></i> Save Counter Data
+                    </button>
+                    <button class="btn btn-warning" id="resetCounterData">
+                        <i class="fas fa-redo"></i> Reset Counter Only
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Age & Sales Calculator Module -->
+        <div class="module-container" id="calculatorModule">
+            <div class="module-header">
+                <h2><i class="fas fa-calendar-alt"></i> Age & Sales Calculator</h2>
+                <button class="back-to-menu">
+                    <i class="fas fa-arrow-left"></i> Back to Menu
+                </button>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-calendar-alt"></i> Age & Sales Calculator</h3>
+                    <div class="date-input-container">
+                        <div class="input-group">
+                            <label for="startDate"><i class="fas fa-egg"></i> First Day (Chick Arrival)</label>
+                            <input type="date" id="startDate" value="">
+                        </div>
+                        <div class="input-group">
+                            <label for="currentAge"><i class="fas fa-birthday-cake"></i> Current Age (Days)</label>
+                            <input type="number" id="currentAge" placeholder="Enter current age in days" min="0" max="90">
+                        </div>
+                        <button class="btn btn-primary" id="calculateDates">
+                            <i class="fas fa-calculator"></i> Calculate Sales Dates
                         </button>
-                        <button class="btn btn-danger" id="removeQuail">
-                            <i class="fas fa-minus"></i> Less
+                    </div>
+                    
+                    <div class="results-container" id="dateResults" style="display: none;">
+                        <div class="result-item">
+                            <span class="result-label">Current Age:</span>
+                            <span class="result-value" id="displayAge">0 days</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Minimum Sales Date:</span>
+                            <span class="result-value" id="minSalesDate">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Optimal Sales Date:</span>
+                            <span class="result-value" id="optimalSalesDate">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label highlight">Maximum Sales Date:</span>
+                            <span class="result-value highlight" id="maxSalesDate">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-info-circle"></i> Calculator Information</h3>
+                    <div class="results-container">
+                        <p>Optimal quail sales timeline:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li><strong>42 days:</strong> Minimum sales age</li>
+                            <li><strong>49 days:</strong> Optimal sales age</li>
+                            <li><strong>56 days:</strong> Maximum sales age</li>
+                        </ul>
+                        <p style="margin-top: 15px; color: #e74c3c;">
+                            <i class="fas fa-exclamation-triangle"></i> After 56 days, feed costs outweigh profits
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calculator Data Management -->
+            <div class="data-section">
+                <h3><i class="fas fa-database"></i> Calculator Module Data</h3>
+                <div class="module-data-info" id="calculatorDataInfo">
+                    Loading data...
+                </div>
+                <div class="data-actions">
+                    <button class="btn btn-info" id="saveCalculatorData">
+                        <i class="fas fa-save"></i> Save Calculator Data
+                    </button>
+                    <button class="btn btn-warning" id="resetCalculatorData">
+                        <i class="fas fa-redo"></i> Reset Calculator Only
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profit & Loss Module -->
+        <div class="module-container" id="profitModule">
+            <div class="module-header">
+                <h2><i class="fas fa-chart-line"></i> Profit & Loss Account</h2>
+                <button class="back-to-menu">
+                    <i class="fas fa-arrow-left"></i> Back to Menu
+                </button>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-chart-line"></i> Profit & Loss Account</h3>
+                    <div class="date-input-container">
+                        <div class="input-group">
+                            <label for="feedCost"><i class="fas fa-wheat-awn"></i> Daily Feed Cost per Quail ($)</label>
+                            <input type="number" id="feedCost" step="0.01" min="0" value="0.05" placeholder="0.05">
+                        </div>
+                        <div class="input-group">
+                            <label for="salePrice"><i class="fas fa-dollar-sign"></i> Sale Price per Quail ($)</label>
+                            <input type="number" id="salePrice" step="0.01" min="0" value="2.50" placeholder="2.50">
+                        </div>
+                        <div class="input-group">
+                            <label for="otherCosts"><i class="fas fa-list"></i> Other Costs per Quail ($)</label>
+                            <input type="number" id="otherCosts" step="0.01" min="0" value="0.30" placeholder="0.30">
+                        </div>
+                        <div class="input-group">
+                            <label for="profitQuailCount"><i class="fas fa-dove"></i> Number of Quails</label>
+                            <input type="number" id="profitQuailCount" step="1" min="0" value="0" placeholder="Enter quail count">
+                        </div>
+                        <button class="btn btn-warning" id="calculateProfit">
+                            <i class="fas fa-calculator"></i> Calculate Profit/Loss
                         </button>
                     </div>
-                    <p style="margin-top: 15px; text-align: center; color: #7f8c8d;">
-                        Count quails in cages. Tap buttons to adjust.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Age & Sales Date Calculator Card -->
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-calendar-alt"></i> Age & Sales Calculator</h2>
-                <div class="date-input-container">
-                    <div class="input-group">
-                        <label for="startDate"><i class="fas fa-egg"></i> First Day (Chick Arrival)</label>
-                        <input type="date" id="startDate" value="">
+                    
+                    <div class="profit-loss-container" id="profitResults" style="display: none;">
+                        <div class="profit-loss-item">
+                            <h4>Total Costs</h4>
+                            <div class="loss-amount" id="totalCosts">$0.00</div>
+                        </div>
+                        <div class="profit-loss-item">
+                            <h4>Total Revenue</h4>
+                            <div class="profit-amount" id="totalRevenue">$0.00</div>
+                        </div>
+                        <div class="profit-loss-item">
+                            <h4>Net Profit</h4>
+                            <div class="profit-amount" id="netProfit">$0.00</div>
+                        </div>
+                        <div class="profit-loss-item">
+                            <h4>Profit per Quail</h4>
+                            <div class="profit-amount" id="profitPerQuail">$0.00</div>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label for="currentAge"><i class="fas fa-birthday-cake"></i> Current Age (Days)</label>
-                        <input type="number" id="currentAge" placeholder="Enter current age in days" min="0" max="90">
-                    </div>
-                    <button class="btn btn-primary" id="calculateDates">
-                        <i class="fas fa-calculator"></i> Calculate Sales Dates
-                    </button>
-                </div>
-                
-                <div class="results-container" id="dateResults" style="display: none;">
-                    <div class="result-item">
-                        <span class="result-label">Current Age:</span>
-                        <span class="result-value" id="displayAge">0 days</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Minimum Sales Date:</span>
-                        <span class="result-value" id="minSalesDate">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Optimal Sales Date:</span>
-                        <span class="result-value" id="optimalSalesDate">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label highlight">Maximum Sales Date:</span>
-                        <span class="result-value highlight" id="maxSalesDate">-</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Profit & Loss Account Card -->
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-chart-line"></i> Profit & Loss Account</h2>
-                <div class="date-input-container">
-                    <div class="input-group">
-                        <label for="feedCost"><i class="fas fa-wheat-awn"></i> Daily Feed Cost per Quail ($)</label>
-                        <input type="number" id="feedCost" step="0.01" min="0" value="0.05" placeholder="0.05">
-                    </div>
-                    <div class="input-group">
-                        <label for="salePrice"><i class="fas fa-dollar-sign"></i> Sale Price per Quail ($)</label>
-                        <input type="number" id="salePrice" step="0.01" min="0" value="2.50" placeholder="2.50">
-                    </div>
-                    <div class="input-group">
-                        <label for="otherCosts"><i class="fas fa-list"></i> Other Costs per Quail ($)</label>
-                        <input type="number" id="otherCosts" step="0.01" min="0" value="0.30" placeholder="0.30">
-                    </div>
-                    <button class="btn btn-warning" id="calculateProfit">
-                        <i class="fas fa-calculator"></i> Calculate Profit/Loss
-                    </button>
-                </div>
-                
-                <div class="profit-loss-container" id="profitResults" style="display: none;">
-                    <div class="profit-loss-item">
-                        <h4>Total Costs</h4>
-                        <div class="loss-amount" id="totalCosts">$0.00</div>
-                    </div>
-                    <div class="profit-loss-item">
-                        <h4>Total Revenue</h4>
-                        <div class="profit-amount" id="totalRevenue">$0.00</div>
-                    </div>
-                    <div class="profit-loss-item">
-                        <h4>Net Profit</h4>
-                        <div class="profit-amount" id="netProfit">$0.00</div>
-                    </div>
-                    <div class="profit-loss-item">
-                        <h4>Profit per Quail</h4>
-                        <div class="profit-amount" id="profitPerQuail">$0.00</div>
+                    
+                    <div class="summary-container" id="profitSummary" style="display: none;">
+                        <div class="summary-text" id="summaryText">
+                            <!-- Summary will appear here -->
+                        </div>
                     </div>
                 </div>
                 
-                <div class="summary-container" id="profitSummary" style="display: none;">
-                    <div class="summary-text" id="summaryText">
-                        <!-- Summary will appear here -->
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-info-circle"></i> Profit Information</h3>
+                    <div class="results-container">
+                        <p>This module uses its own data separate from other modules:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Separate quail count for profit calculations</li>
+                            <li>Customizable feed and other costs</li>
+                            <li>Independent from counter and calculator modules</li>
+                        </ul>
+                        <p style="margin-top: 15px; color: #27ae60;">
+                            <i class="fas fa-lightbulb"></i> Tip: Adjust sale price to find optimal profitability
+                        </p>
                     </div>
                 </div>
             </div>
             
-            <!-- Quick Actions Card -->
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-bolt"></i> Quick Actions</h2>
-                <div class="date-input-container">
-                    <button class="btn btn-primary" id="setOptimalDate">
-                        <i class="fas fa-calendar-check"></i> Set to Optimal Sales Date
+            <!-- Profit Data Management -->
+            <div class="data-section">
+                <h3><i class="fas fa-database"></i> Profit Module Data</h3>
+                <div class="module-data-info" id="profitDataInfo">
+                    Loading data...
+                </div>
+                <div class="data-actions">
+                    <button class="btn btn-info" id="saveProfitData">
+                        <i class="fas fa-save"></i> Save Profit Data
                     </button>
-                    <button class="btn btn-success" id="saveData">
-                        <i class="fas fa-save"></i> Save Current Data
-                    </button>
-                    <button class="btn btn-danger reset-btn" id="resetAll">
-                        <i class="fas fa-redo"></i> Reset All Data
+                    <button class="btn btn-warning" id="resetProfitData">
+                        <i class="fas fa-redo"></i> Reset Profit Only
                     </button>
                 </div>
-                <div class="results-container" style="margin-top: 20px;">
-                    <p style="text-align: center; color: #7f8c8d;">
-                        <i class="fas fa-info-circle"></i> Optimal sales age: 42-49 days
-                    </p>
-                    <p style="text-align: center; color: #7f8c8d; margin-top: 10px;">
-                        <i class="fas fa-info-circle"></i> Maximum sales age: 56 days
-                    </p>
+            </div>
+        </div>
+        
+        <!-- Quick Actions Module -->
+        <div class="module-container" id="actionsModule">
+            <div class="module-header">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <button class="back-to-menu">
+                    <i class="fas fa-arrow-left"></i> Back to Menu
+                </button>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    <div class="date-input-container">
+                        <button class="btn btn-primary" id="setOptimalDate">
+                            <i class="fas fa-calendar-check"></i> Set to Optimal Sales Date
+                        </button>
+                        <button class="btn btn-success" id="saveAllData">
+                            <i class="fas fa-save"></i> Save All Module Data
+                        </button>
+                        <button class="btn btn-danger reset-btn" id="resetAll">
+                            <i class="fas fa-redo"></i> Reset All Data
+                        </button>
+                    </div>
+                    <div class="results-container" style="margin-top: 20px;">
+                        <p style="text-align: center; color: #7f8c8d;">
+                            <i class="fas fa-info-circle"></i> Each module maintains separate data
+                        </p>
+                        <p style="text-align: center; color: #7f8c8d; margin-top: 10px;">
+                            <i class="fas fa-info-circle"></i> Reset individual modules or all at once
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-database"></i> Data Overview</h3>
+                    <div class="results-container">
+                        <div class="result-item">
+                            <span class="result-label">Counter Module:</span>
+                            <span class="result-value" id="counterOverview">0 quails</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Calculator Module:</span>
+                            <span class="result-value" id="calculatorOverview">No data</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Profit Module:</span>
+                            <span class="result-value" id="profitOverview">No data</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Last Updated:</span>
+                            <span class="result-value" id="lastUpdated">Never</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <h3><i class="fas fa-cogs"></i> System Actions</h3>
+                <div class="data-actions">
+                    <button class="btn btn-info" id="exportAllData">
+                        <i class="fas fa-download"></i> Export All Data
+                    </button>
+                    <button class="btn btn-warning" id="importData">
+                        <i class="fas fa-upload"></i> Import Data
+                    </button>
+                    <button class="btn btn-danger" id="clearLocalStorage">
+                        <i class="fas fa-trash-alt"></i> Clear All Saved Data
+                    </button>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>Quail Farm Manager &copy; 2023 | Designed for mobile use | Daily feeding costs reduce profit after 42 days</p>
+            <p>Quail Farm Manager &copy; 2023 | Separate data for each module | Toggle between menu and module views</p>
         </footer>
     </div>
     
     <script>
-        // Initialize with current date for start date input
+        // Module Data Management
+        const moduleData = {
+            counter: {
+                quailCount: 0
+            },
+            calculator: {
+                startDate: '',
+                currentAge: '',
+                calculatedDates: null
+            },
+            profit: {
+                feedCost: 0.05,
+                salePrice: 2.50,
+                otherCosts: 0.30,
+                quailCount: 0,
+                calculations: null
+            },
+            lastUpdated: null
+        };
+        
+        // Initialize with current date
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
+            
+            // Set default start date
             document.getElementById('startDate').value = formattedDate;
+            moduleData.calculator.startDate = formattedDate;
             
-            // Load saved data if exists
-            loadSavedData();
-        });
-        
-        // Tally Counter Functionality
-        let quailCount = 0;
-        const quailCountElement = document.getElementById('quailCount');
-        
-        document.getElementById('addQuail').addEventListener('click', function() {
-            quailCount++;
-            updateQuailCount();
-        });
-        
-        document.getElementById('removeQuail').addEventListener('click', function() {
-            if (quailCount > 0) {
-                quailCount--;
-                updateQuailCount();
-            }
-        });
-        
-        function updateQuailCount() {
-            quailCountElement.textContent = quailCount;
-            quailCountElement.classList.add('pulse');
-            setTimeout(() => {
-                quailCountElement.classList.remove('pulse');
-            }, 500);
+            // Load saved data
+            loadAllData();
+            updateDataDisplays();
             
-            // Save to localStorage
-            saveData();
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Update overview
+            updateOverview();
+        });
+        
+        // Module Navigation
+        function setupEventListeners() {
+            // Module selection
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const module = this.dataset.module;
+                    activateModule(module);
+                });
+            });
+            
+            // Back to menu buttons
+            document.querySelectorAll('.back-to-menu').forEach(btn => {
+                btn.addEventListener('click', showMenu);
+            });
+            
+            // Menu toggle
+            document.getElementById('menuToggle').addEventListener('click', toggleMenuView);
+            
+            // Counter module
+            document.getElementById('addQuail').addEventListener('click', addQuail);
+            document.getElementById('removeQuail').addEventListener('click', removeQuail);
+            document.getElementById('saveCounterData').addEventListener('click', saveCounterData);
+            document.getElementById('resetCounterData').addEventListener('click', resetCounterData);
+            
+            // Calculator module
+            document.getElementById('calculateDates').addEventListener('click', calculateDates);
+            document.getElementById('saveCalculatorData').addEventListener('click', saveCalculatorData);
+            document.getElementById('resetCalculatorData').addEventListener('click', resetCalculatorData);
+            
+            // Profit module
+            document.getElementById('calculateProfit').addEventListener('click', calculateProfit);
+            document.getElementById('saveProfitData').addEventListener('click', saveProfitData);
+            document.getElementById('resetProfitData').addEventListener('click', resetProfitData);
+            
+            // Actions module
+            document.getElementById('setOptimalDate').addEventListener('click', setOptimalDate);
+            document.getElementById('saveAllData').addEventListener('click', saveAllData);
+            document.getElementById('resetAll').addEventListener('click', resetAll);
+            document.getElementById('exportAllData').addEventListener('click', exportAllData);
+            document.getElementById('importData').addEventListener('click', importData);
+            document.getElementById('clearLocalStorage').addEventListener('click', clearLocalStorage);
+            
+            // Auto-save on input changes
+            document.getElementById('startDate').addEventListener('change', updateCalculatorData);
+            document.getElementById('currentAge').addEventListener('change', updateCalculatorData);
+            document.getElementById('feedCost').addEventListener('change', updateProfitData);
+            document.getElementById('salePrice').addEventListener('change', updateProfitData);
+            document.getElementById('otherCosts').addEventListener('change', updateProfitData);
+            document.getElementById('profitQuailCount').addEventListener('change', updateProfitData);
         }
         
-        // Age & Sales Date Calculator
-        document.getElementById('calculateDates').addEventListener('click', function() {
+        // Module Navigation Functions
+        function activateModule(moduleId) {
+            // Update active card in menu
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`.module-card[data-module="${moduleId}"]`).classList.add('active');
+            
+            // Show selected module, hide others
+            document.querySelectorAll('.module-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById(`${moduleId}Module`).classList.add('active');
+            
+            // Update overview
+            updateOverview();
+        }
+        
+        function showMenu() {
+            activateModule('counter');
+        }
+        
+        function toggleMenuView() {
+            const menu = document.getElementById('moduleMenu');
+            const isVisible = menu.style.display !== 'none';
+            
+            if (isVisible) {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'grid';
+            }
+        }
+        
+        // Counter Module Functions
+        function addQuail() {
+            moduleData.counter.quailCount++;
+            updateCounterDisplay();
+            saveCounterData();
+            updateOverview();
+        }
+        
+        function removeQuail() {
+            if (moduleData.counter.quailCount > 0) {
+                moduleData.counter.quailCount--;
+                updateCounterDisplay();
+                saveCounterData();
+                updateOverview();
+            }
+        }
+        
+        function updateCounterDisplay() {
+            const counterElement = document.getElementById('quailCount');
+            counterElement.textContent = moduleData.counter.quailCount;
+            counterElement.classList.add('pulse');
+            setTimeout(() => {
+                counterElement.classList.remove('pulse');
+            }, 500);
+        }
+        
+        function saveCounterData() {
+            moduleData.lastUpdated = new Date().toISOString();
+            localStorage.setItem('quailFarmCounterData', JSON.stringify(moduleData.counter));
+            updateDataDisplay('counterDataInfo', moduleData.counter);
+            updateOverview();
+            showNotification('Counter data saved!');
+        }
+        
+        function resetCounterData() {
+            if (confirm('Reset counter data? This will set quail count to 0.')) {
+                moduleData.counter.quailCount = 0;
+                updateCounterDisplay();
+                saveCounterData();
+                showNotification('Counter data reset!');
+            }
+        }
+        
+        // Calculator Module Functions
+        function calculateDates() {
             const startDateInput = document.getElementById('startDate').value;
             const currentAgeInput = parseInt(document.getElementById('currentAge').value) || 0;
             
@@ -519,13 +1052,13 @@
             
             // Calculate sales dates
             const minSalesDate = new Date(startDate);
-            minSalesDate.setDate(minSalesDate.getDate() + 42); // Minimum 42 days
+            minSalesDate.setDate(minSalesDate.getDate() + 42);
             
             const optimalSalesDate = new Date(startDate);
-            optimalSalesDate.setDate(optimalSalesDate.getDate() + 49); // Optimal 49 days
+            optimalSalesDate.setDate(optimalSalesDate.getDate() + 49);
             
             const maxSalesDate = new Date(startDate);
-            maxSalesDate.setDate(maxSalesDate.getDate() + 56); // Maximum 56 days
+            maxSalesDate.setDate(maxSalesDate.getDate() + 56);
             
             // Format dates for display
             const formatDate = (date) => {
@@ -546,27 +1079,59 @@
             // Show results
             document.getElementById('dateResults').style.display = 'block';
             
-            // Save to localStorage
-            saveData();
-        });
+            // Save calculations
+            moduleData.calculator.calculatedDates = {
+                currentAge: currentAge,
+                minSalesDate: minSalesDate.toISOString(),
+                optimalSalesDate: optimalSalesDate.toISOString(),
+                maxSalesDate: maxSalesDate.toISOString()
+            };
+            
+            saveCalculatorData();
+        }
         
-        // Profit & Loss Calculator
-        document.getElementById('calculateProfit').addEventListener('click', function() {
+        function updateCalculatorData() {
+            moduleData.calculator.startDate = document.getElementById('startDate').value;
+            moduleData.calculator.currentAge = document.getElementById('currentAge').value;
+        }
+        
+        function saveCalculatorData() {
+            moduleData.lastUpdated = new Date().toISOString();
+            localStorage.setItem('quailFarmCalculatorData', JSON.stringify(moduleData.calculator));
+            updateDataDisplay('calculatorDataInfo', moduleData.calculator);
+            updateOverview();
+            showNotification('Calculator data saved!');
+        }
+        
+        function resetCalculatorData() {
+            if (confirm('Reset calculator data?')) {
+                const today = new Date();
+                const formattedDate = today.toISOString().split('T')[0];
+                
+                moduleData.calculator = {
+                    startDate: formattedDate,
+                    currentAge: '',
+                    calculatedDates: null
+                };
+                
+                document.getElementById('startDate').value = formattedDate;
+                document.getElementById('currentAge').value = '';
+                document.getElementById('dateResults').style.display = 'none';
+                
+                saveCalculatorData();
+                showNotification('Calculator data reset!');
+            }
+        }
+        
+        // Profit Module Functions
+        function calculateProfit() {
             const feedCost = parseFloat(document.getElementById('feedCost').value) || 0;
             const salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
             const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
+            const quailCount = parseInt(document.getElementById('profitQuailCount').value) || 0;
             
-            // Get current age for cost calculation
-            const currentAgeInput = parseInt(document.getElementById('currentAge').value) || 0;
-            const startDateInput = document.getElementById('startDate').value;
-            
-            let currentAge = currentAgeInput;
-            if (currentAge === 0 && startDateInput) {
-                const startDate = new Date(startDateInput);
-                const currentDate = new Date();
-                const timeDiff = currentDate.getTime() - startDate.getTime();
-                currentAge = Math.floor(timeDiff / (1000 * 3600 * 24));
-            }
+            // Get age for cost calculation
+            const currentAge = moduleData.calculator.calculatedDates?.currentAge || 42;
             
             // Calculate costs and revenue
             const feedCostTotal = feedCost * currentAge * quailCount;
@@ -616,12 +1181,60 @@
             document.getElementById('profitResults').style.display = 'grid';
             document.getElementById('profitSummary').style.display = 'block';
             
-            // Save to localStorage
-            saveData();
-        });
+            // Save calculations
+            moduleData.profit.calculations = {
+                feedCost: feedCost,
+                salePrice: salePrice,
+                otherCosts: otherCosts,
+                quailCount: quailCount,
+                totalCosts: totalCosts,
+                totalRevenue: totalRevenue,
+                netProfit: netProfit,
+                profitPerQuail: profitPerQuail
+            };
+            
+            saveProfitData();
+        }
         
-        // Quick Actions
-        document.getElementById('setOptimalDate').addEventListener('click', function() {
+        function updateProfitData() {
+            moduleData.profit.feedCost = parseFloat(document.getElementById('feedCost').value) || 0.05;
+            moduleData.profit.salePrice = parseFloat(document.getElementById('salePrice').value) || 2.50;
+            moduleData.profit.otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0.30;
+            moduleData.profit.quailCount = parseInt(document.getElementById('profitQuailCount').value) || 0;
+        }
+        
+        function saveProfitData() {
+            moduleData.lastUpdated = new Date().toISOString();
+            localStorage.setItem('quailFarmProfitData', JSON.stringify(moduleData.profit));
+            updateDataDisplay('profitDataInfo', moduleData.profit);
+            updateOverview();
+            showNotification('Profit data saved!');
+        }
+        
+        function resetProfitData() {
+            if (confirm('Reset profit data?')) {
+                moduleData.profit = {
+                    feedCost: 0.05,
+                    salePrice: 2.50,
+                    otherCosts: 0.30,
+                    quailCount: 0,
+                    calculations: null
+                };
+                
+                document.getElementById('feedCost').value = '0.05';
+                document.getElementById('salePrice').value = '2.50';
+                document.getElementById('otherCosts').value = '0.30';
+                document.getElementById('profitQuailCount').value = '0';
+                document.getElementById('profitResults').style.display = 'none';
+                document.getElementById('profitSummary').style.display = 'none';
+                
+                saveProfitData();
+                showNotification('Profit data reset!');
+            }
+        }
+        
+        // Quick Actions Functions
+        function setOptimalDate() {
             const startDateInput = document.getElementById('startDate').value;
             if (!startDateInput) {
                 alert('Please set a start date first.');
@@ -632,75 +1245,200 @@
             const optimalSalesDate = new Date(startDate);
             optimalSalesDate.setDate(optimalSalesDate.getDate() + 49);
             
-            const formattedDate = optimalSalesDate.toISOString().split('T')[0];
-            
-            // Create a temporary date input to show the optimal date
             alert(`Optimal sales date is: ${optimalSalesDate.toLocaleDateString()}\n\nSet this as your target selling date for maximum profit.`);
-        });
+        }
         
-        document.getElementById('saveData').addEventListener('click', function() {
-            saveData();
-            alert('Data saved successfully! Your data will be restored when you revisit this page.');
-        });
+        function saveAllData() {
+            saveCounterData();
+            saveCalculatorData();
+            saveProfitData();
+            showNotification('All module data saved!');
+        }
         
-        document.getElementById('resetAll').addEventListener('click', function() {
-            if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
-                quailCount = 0;
-                quailCountElement.textContent = '0';
-                
-                const today = new Date();
-                const formattedDate = today.toISOString().split('T')[0];
-                document.getElementById('startDate').value = formattedDate;
-                
-                document.getElementById('currentAge').value = '';
-                document.getElementById('feedCost').value = '0.05';
-                document.getElementById('salePrice').value = '2.50';
-                document.getElementById('otherCosts').value = '0.30';
-                
-                document.getElementById('dateResults').style.display = 'none';
-                document.getElementById('profitResults').style.display = 'none';
-                document.getElementById('profitSummary').style.display = 'none';
-                
-                localStorage.removeItem('quailFarmData');
-                alert('All data has been reset.');
+        function resetAll() {
+            if (confirm('Are you sure you want to reset ALL data in ALL modules? This cannot be undone.')) {
+                resetCounterData();
+                resetCalculatorData();
+                resetProfitData();
+                showNotification('All data reset!');
             }
-        });
+        }
         
-        // Data persistence functions
-        function saveData() {
-            const data = {
-                quailCount: quailCount,
-                startDate: document.getElementById('startDate').value,
-                currentAge: document.getElementById('currentAge').value,
-                feedCost: document.getElementById('feedCost').value,
-                salePrice: document.getElementById('salePrice').value,
-                otherCosts: document.getElementById('otherCosts').value,
-                lastUpdated: new Date().toISOString()
+        function exportAllData() {
+            const exportData = {
+                counter: moduleData.counter,
+                calculator: moduleData.calculator,
+                profit: moduleData.profit,
+                lastUpdated: moduleData.lastUpdated
             };
             
-            localStorage.setItem('quailFarmData', JSON.stringify(data));
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `quail-farm-data-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Data exported successfully!');
         }
         
-        function loadSavedData() {
-            const savedData = localStorage.getItem('quailFarmData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
                 
-                quailCount = data.quailCount || 0;
-                quailCountElement.textContent = quailCount;
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        
+                        if (importedData.counter) {
+                            moduleData.counter = importedData.counter;
+                            updateCounterDisplay();
+                        }
+                        
+                        if (importedData.calculator) {
+                            moduleData.calculator = importedData.calculator;
+                            document.getElementById('startDate').value = moduleData.calculator.startDate || '';
+                            document.getElementById('currentAge').value = moduleData.calculator.currentAge || '';
+                        }
+                        
+                        if (importedData.profit) {
+                            moduleData.profit = importedData.profit;
+                            document.getElementById('feedCost').value = moduleData.profit.feedCost || 0.05;
+                            document.getElementById('salePrice').value = moduleData.profit.salePrice || 2.50;
+                            document.getElementById('otherCosts').value = moduleData.profit.otherCosts || 0.30;
+                            document.getElementById('profitQuailCount').value = moduleData.profit.quailCount || 0;
+                        }
+                        
+                        saveAllData();
+                        updateDataDisplays();
+                        updateOverview();
+                        showNotification('Data imported successfully!');
+                    } catch (error) {
+                        alert('Error importing data. Please check the file format.');
+                    }
+                };
                 
-                if (data.startDate) document.getElementById('startDate').value = data.startDate;
-                if (data.currentAge) document.getElementById('currentAge').value = data.currentAge;
-                if (data.feedCost) document.getElementById('feedCost').value = data.feedCost;
-                if (data.salePrice) document.getElementById('salePrice').value = data.salePrice;
-                if (data.otherCosts) document.getElementById('otherCosts').value = data.otherCosts;
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+        
+        function clearLocalStorage() {
+            if (confirm('Clear ALL saved data from browser storage? This cannot be undone.')) {
+                localStorage.clear();
+                location.reload();
             }
         }
         
-        // Auto-save when inputs change
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('change', saveData);
-        });
+        // Data Management Functions
+        function loadAllData() {
+            // Load counter data
+            const counterData = localStorage.getItem('quailFarmCounterData');
+            if (counterData) {
+                moduleData.counter = JSON.parse(counterData);
+                updateCounterDisplay();
+            }
+            
+            // Load calculator data
+            const calculatorData = localStorage.getItem('quailFarmCalculatorData');
+            if (calculatorData) {
+                moduleData.calculator = JSON.parse(calculatorData);
+                document.getElementById('startDate').value = moduleData.calculator.startDate || '';
+                document.getElementById('currentAge').value = moduleData.calculator.currentAge || '';
+            }
+            
+            // Load profit data
+            const profitData = localStorage.getItem('quailFarmProfitData');
+            if (profitData) {
+                moduleData.profit = JSON.parse(profitData);
+                document.getElementById('feedCost').value = moduleData.profit.feedCost || 0.05;
+                document.getElementById('salePrice').value = moduleData.profit.salePrice || 2.50;
+                document.getElementById('otherCosts').value = moduleData.profit.otherCosts || 0.30;
+                document.getElementById('profitQuailCount').value = moduleData.profit.quailCount || 0;
+            }
+        }
+        
+        function updateDataDisplays() {
+            updateDataDisplay('counterDataInfo', moduleData.counter);
+            updateDataDisplay('calculatorDataInfo', moduleData.calculator);
+            updateDataDisplay('profitDataInfo', moduleData.profit);
+        }
+        
+        function updateDataDisplay(elementId, data) {
+            const element = document.getElementById(elementId);
+            element.textContent = JSON.stringify(data, null, 2);
+        }
+        
+        function updateOverview() {
+            document.getElementById('counterOverview').textContent = `${moduleData.counter.quailCount} quails`;
+            
+            const calculatorOverview = moduleData.calculator.calculatedDates ? 
+                `${moduleData.calculator.calculatedDates.currentAge} days` : 'No data';
+            document.getElementById('calculatorOverview').textContent = calculatorOverview;
+            
+            const profitOverview = moduleData.profit.calculations ? 
+                `$${moduleData.profit.calculations.netProfit.toFixed(2)}` : 'No data';
+            document.getElementById('profitOverview').textContent = profitOverview;
+            
+            if (moduleData.lastUpdated) {
+                const date = new Date(moduleData.lastUpdated);
+                document.getElementById('lastUpdated').textContent = date.toLocaleString();
+            }
+        }
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #2ecc71;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            // Add animation styles
+            if (!document.getElementById('notificationStyles')) {
+                const style = document.createElement('style');
+                style.id = 'notificationStyles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
     </script>
 </body>
-</html>
+    </html>
