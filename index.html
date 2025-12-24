@@ -4,951 +4,596 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quail Farm Financial Manager</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Quail Sale Manager</title>
     <style>
-        :root {
-            --primary: #4a6fa5;
-            --secondary: #166088;
-            --success: #2e8b57;
-            --danger: #d9534f;
-            --warning: #f0ad4e;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            z-index: 0;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            padding: 25px 0;
-            border-radius: var(--border-radius);
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
+        .header {
             text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            font-size: 40px;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        header h1 i {
-            font-size: 2.2rem;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .header h1 {
+            color: white;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .dashboard {
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .main-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 25px;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
         }
 
         .card-title {
-            font-size: 1.3rem;
+            color: white;
+            font-size: 1.4em;
             font-weight: 600;
-            color: var(--secondary);
-        }
-
-        .card-icon {
-            background: var(--primary);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+            gap: 12px;
         }
 
-        .financial-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
         }
 
-        .profit {
-            color: var(--success);
-        }
-
-        .loss {
-            color: var(--danger);
-        }
-
-        .expense {
-            color: var(--warning);
-        }
-
-        .income {
-            color: var(--primary);
-        }
-
-        .chart-container {
-            grid-column: span 2;
-            height: 300px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
-        }
-
-        .forms-container {
+        .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.1em;
         }
 
         input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
+            padding: 14px 15px 14px 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 1em;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
         }
 
         input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
         }
 
         .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
+            padding: 16px 24px;
             border: none;
-            padding: 12px 25px;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        .btn-block {
-            width: 100%;
-        }
-
-        .btn-success {
-            background: var(--success);
-        }
-
-        .btn-success:hover {
-            background: #267347;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-        }
-
-        .btn-danger:hover {
-            background: #c9302c;
-        }
-
-        .btn-warning {
-            background: var(--warning);
-            color: var(--dark);
-        }
-
-        .btn-warning:hover {
-            background: #ec971f;
-        }
-
-        .buttons-row {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .history-container {
-            margin-top: 40px;
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            background: white;
-            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
             overflow: hidden;
-            box-shadow: var(--box-shadow);
         }
 
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        th {
-            background-color: var(--primary);
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
         }
 
-        tr:hover {
-            background-color: #f9f9f9;
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
         }
 
-        .positive {
-            color: var(--success);
-            font-weight: 600;
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        .negative {
-            color: var(--danger);
-            font-weight: 600;
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #777;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #ddd;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .chart-container {
-                grid-column: span 1;
-            }
-            
-            .forms-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .buttons-row {
-                flex-direction: column;
-            }
-            
-            header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
+        .results-card {
+            grid-column: 1 / -1;
             display: none;
         }
 
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .results-card.show {
+            display: block;
+            animation: scaleIn 0.5s ease;
         }
 
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .final-result {
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-result::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .final-result.profit {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 10px 40px rgba(56, 239, 125, 0.3);
+        }
+
+        .final-result.loss {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            box-shadow: 0 10px 40px rgba(235, 51, 73, 0.3);
+        }
+
+        .final-result-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-result h3 {
+            color: white;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .final-result .amount {
+            color: white;
+            font-size: 3em;
+            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .final-result .amount {
+                font-size: 2.2em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-dove"></i> Quail Farm Financial Manager</h1>
-            <p>Track expenses, sales, and profits for your quail farm business</p>
-        </header>
-
-        <div class="alert alert-success" id="successAlert">
-            <i class="fas fa-check-circle"></i> Data saved successfully!
+        <div class="header">
+            <div class="logo">🐦</div>
+            <h1>Quail Sale Manager</h1>
+            <p>Advanced Profit & Loss Calculator for Professional Quail Farming</p>
         </div>
 
-        <div class="alert alert-error" id="errorAlert">
-            <i class="fas fa-exclamation-circle"></i> Please enter valid numbers in all fields.
-        </div>
-
-        <div class="dashboard">
+        <div class="main-grid">
             <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Total Expenses</h2>
-                    <div class="card-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                </div>
-                <div class="financial-value expense" id="totalExpenses">$0.00</div>
-                <p>Sum of all farm expenses</p>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Total Sales</h2>
-                    <div class="card-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                </div>
-                <div class="financial-value income" id="totalSales">$0.00</div>
-                <p>Revenue from all sales channels</p>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Gross Profit</h2>
-                    <div class="card-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                </div>
-                <div class="financial-value" id="grossProfit">$0.00</div>
-                <p>Sales minus expenses</p>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Net Profit</h2>
-                    <div class="card-icon">
-                        <i class="fas fa-piggy-bank"></i>
-                    </div>
-                </div>
-                <div class="financial-value" id="netProfit">$0.00</div>
-                <p>After accounting for all costs</p>
-            </div>
-
-            <div class="card chart-container">
-                <div class="card-header">
-                    <h2 class="card-title">Financial Overview</h2>
-                    <div class="card-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                </div>
-                <canvas id="financeChart"></canvas>
-            </div>
-        </div>
-
-        <div class="forms-container">
-            <div class="card">
-                <h2 class="section-title">Enter Expenses</h2>
-                <form id="expenseForm">
+                <h2 class="card-title">📊 Stock Information</h2>
+                <form id="quailForm">
                     <div class="form-group">
-                        <label for="feedCost"><i class="fas fa-seedling"></i> Feed Cost ($)</label>
-                        <input type="number" id="feedCost" step="0.01" min="0" placeholder="Enter feed cost" required>
+                        <label for="totalQuails">Total Quail Count</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🐣</span>
+                            <input type="number" id="totalQuails" min="0" required placeholder="Enter opening stock">
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="chickCost"><i class="fas fa-egg"></i> Chick Cost ($)</label>
-                        <input type="number" id="chickCost" step="0.01" min="0" placeholder="Enter chick cost" required>
+                        <label for="chickPrice">Chick Price per Quail</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">₹</span>
+                            <input type="number" id="chickPrice" min="0" step="0.01" required placeholder="Purchase price per chick">
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="electricityCost"><i class="fas fa-bolt"></i> Electricity Cost ($)</label>
-                        <input type="number" id="electricityCost" step="0.01" min="0" placeholder="Enter electricity cost" required>
+                        <label for="quailsSold">Total Quails Sold</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📦</span>
+                            <input type="number" id="quailsSold" min="0" required placeholder="Number of quails sold">
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="medicineCost"><i class="fas fa-pills"></i> Medicine Cost ($)</label>
-                        <input type="number" id="medicineCost" step="0.01" min="0" placeholder="Enter medicine cost" required>
+                        <label for="salePrice">Sale Price per Quail</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">💰</span>
+                            <input type="number" id="salePrice" min="0" step="0.01" required placeholder="Selling price per quail">
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="laborCost"><i class="fas fa-user-tie"></i> Labor Cost ($)</label>
-                        <input type="number" id="laborCost" step="0.01" min="0" placeholder="Enter labor cost" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="otherExpenses"><i class="fas fa-list"></i> Other Expenses ($)</label>
-                        <input type="number" id="otherExpenses" step="0.01" min="0" placeholder="Enter other expenses" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-success btn-block">
-                        <i class="fas fa-save"></i> Save Expenses
-                    </button>
                 </form>
             </div>
 
             <div class="card">
-                <h2 class="section-title">Enter Sales Data</h2>
-                <form id="salesForm">
-                    <div class="form-group">
-                        <label for="liveQuails"><i class="fas fa-dove"></i> Live Quails Sales ($)</label>
-                        <input type="number" id="liveQuails" step="0.01" min="0" placeholder="Enter live quails sales" required>
+                <h2 class="card-title">💵 Expenses</h2>
+                <div class="form-group">
+                    <label for="feedQty">Feed Quantity (kg)</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">⚖️</span>
+                        <input type="number" id="feedQty" min="0" step="0.1" required placeholder="Total feed in kg">
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="eggSales"><i class="fas fa-egg"></i> Egg Sales ($)</label>
-                        <input type="number" id="eggSales" step="0.01" min="0" placeholder="Enter egg sales" required>
+                <div class="form-group">
+                    <label for="feedCost">Feed Cost per kg</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">₹</span>
+                        <input type="number" id="feedCost" min="0" step="0.01" required placeholder="Cost per kg">
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="meatSales"><i class="fas fa-drumstick-bite"></i> Meat Sales ($)</label>
-                        <input type="number" id="meatSales" step="0.01" min="0" placeholder="Enter meat sales" required>
+                <div class="form-group">
+                    <label for="otherExpenses">Other Expenses</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">💳</span>
+                        <input type="number" id="otherExpenses" min="0" step="0.01" required placeholder="Electricity, medicine, labour, etc.">
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="otherSales"><i class="fas fa-boxes"></i> Other Sales ($)</label>
-                        <input type="number" id="otherSales" step="0.01" min="0" placeholder="Enter other sales" required>
-                    </div>
-
-                    <div class="buttons-row">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save"></i> Save Sales
-                        </button>
-                        <button type="button" class="btn btn-warning" id="calculateBtn">
-                            <i class="fas fa-calculator"></i> Calculate Profits
-                        </button>
-                    </div>
-                </form>
-
-                <div class="buttons-row">
-                    <button type="button" class="btn" id="loadSampleBtn">
-                        <i class="fas fa-vial"></i> Load Sample Data
+                <div class="button-group">
+                    <button type="submit" class="btn btn-calculate" onclick="calculateProfitLoss(); return false;">
+                        <span>Calculate Profit/Loss</span>
                     </button>
-                    <button type="button" class="btn btn-danger" id="resetBtn">
-                        <i class="fas fa-trash"></i> Reset All Data
+                    <button type="button" class="btn btn-reset" onclick="resetForm()">
+                        <span>Reset</span>
                     </button>
                 </div>
             </div>
-        </div>
 
-        <div class="history-container">
-            <div class="card">
-                <h2 class="section-title">Financial History</h2>
-                <div class="table-container">
-                    <table id="historyTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Expenses</th>
-                                <th>Sales</th>
-                                <th>Gross Profit</th>
-                                <th>Net Profit</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyBody">
-                            <tr>
-                                <td colspan="6" class="empty-state">
-                                    <i class="fas fa-history"></i>
-                                    <p>No financial records yet. Start by entering your expenses and sales data.</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div id="resultsCard" class="card results-card">
+                <h2 class="card-title">📈 Financial Analysis</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Chick Cost</div>
+                        <div class="stat-value" id="totalChickCost">₹0</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-label">Feed Cost</div>
+                        <div class="stat-value" id="totalFeedCost">₹0</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-label">Sales Amount</div>
+                        <div class="stat-value" id="totalSales">₹0</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-label">Total Expenses</div>
+                        <div class="stat-value" id="totalExpenses">₹0</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-label">Remaining Stock</div>
+                        <div class="stat-value" id="remainingStock">0</div>
+                    </div>
+                </div>
+
+                <div id="finalResult" class="final-result">
+                    <div class="final-result-content">
+                        <h3 id="resultTitle">Net Profit</h3>
+                        <div class="amount" id="resultAmount">₹0.00</div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <footer>
-            <p>Quail Farm Financial Manager &copy; <span id="currentYear"></span> | Designed for modern quail farming businesses</p>
-        </footer>
     </div>
 
     <script>
-        // DOM Elements
-        const expenseForm = document.getElementById('expenseForm');
-        const salesForm = document.getElementById('salesForm');
-        const calculateBtn = document.getElementById('calculateBtn');
-        const loadSampleBtn = document.getElementById('loadSampleBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const successAlert = document.getElementById('successAlert');
-        const errorAlert = document.getElementById('errorAlert');
-        
-        // Financial Summary Elements
-        const totalExpensesEl = document.getElementById('totalExpenses');
-        const totalSalesEl = document.getElementById('totalSales');
-        const grossProfitEl = document.getElementById('grossProfit');
-        const netProfitEl = document.getElementById('netProfit');
-        
-        // Chart Element
-        let financeChart = null;
-        
-        // Initialize data
-        let financialData = {
-            expenses: {
-                feedCost: 0,
-                chickCost: 0,
-                electricityCost: 0,
-                medicineCost: 0,
-                laborCost: 0,
-                otherExpenses: 0
-            },
-            sales: {
-                liveQuails: 0,
-                eggSales: 0,
-                meatSales: 0,
-                otherSales: 0
-            },
-            history: []
-        };
-        
-        // Load data from localStorage if available
-        function loadData() {
-            const savedData = localStorage.getItem('quailFarmData');
-            if (savedData) {
-                financialData = JSON.parse(savedData);
-                updateInputFields();
-                calculateFinancials();
-                updateHistoryTable();
-            }
-        }
-        
-        // Save data to localStorage
-        function saveData() {
-            localStorage.setItem('quailFarmData', JSON.stringify(financialData));
-        }
-        
-        // Update input fields with saved data
-        function updateInputFields() {
-            // Expense inputs
-            document.getElementById('feedCost').value = financialData.expenses.feedCost || 0;
-            document.getElementById('chickCost').value = financialData.expenses.chickCost || 0;
-            document.getElementById('electricityCost').value = financialData.expenses.electricityCost || 0;
-            document.getElementById('medicineCost').value = financialData.expenses.medicineCost || 0;
-            document.getElementById('laborCost').value = financialData.expenses.laborCost || 0;
-            document.getElementById('otherExpenses').value = financialData.expenses.otherExpenses || 0;
-            
-            // Sales inputs
-            document.getElementById('liveQuails').value = financialData.sales.liveQuails || 0;
-            document.getElementById('eggSales').value = financialData.sales.eggSales || 0;
-            document.getElementById('meatSales').value = financialData.sales.meatSales || 0;
-            document.getElementById('otherSales').value = financialData.sales.otherSales || 0;
-        }
-        
-        // Calculate all financials
-        function calculateFinancials() {
-            // Calculate total expenses
-            const expenses = financialData.expenses;
-            const totalExpenses = Object.values(expenses).reduce((sum, value) => sum + parseFloat(value || 0), 0);
-            
-            // Calculate total sales
-            const sales = financialData.sales;
-            const totalSales = Object.values(sales).reduce((sum, value) => sum + parseFloat(value || 0), 0);
-            
-            // Calculate gross profit (sales - expenses)
-            const grossProfit = totalSales - totalExpenses;
-            
-            // Calculate net profit (gross profit - 10% for additional costs)
-            const additionalCosts = totalExpenses * 0.1; // Assuming 10% additional costs
-            const netProfit = grossProfit - additionalCosts;
-            
-            // Update UI
-            totalExpensesEl.textContent = `$${totalExpenses.toFixed(2)}`;
-            totalSalesEl.textContent = `$${totalSales.toFixed(2)}`;
-            
-            // Format profit values with appropriate colors
-            grossProfitEl.textContent = `$${grossProfit.toFixed(2)}`;
-            grossProfitEl.className = 'financial-value ' + (grossProfit >= 0 ? 'profit' : 'loss');
-            
-            netProfitEl.textContent = `$${netProfit.toFixed(2)}`;
-            netProfitEl.className = 'financial-value ' + (netProfit >= 0 ? 'profit' : 'loss');
-            
-            // Update chart
-            updateChart(totalExpenses, totalSales, grossProfit, netProfit);
-            
-            return { totalExpenses, totalSales, grossProfit, netProfit };
-        }
-        
-        // Update the financial chart
-        function updateChart(expenses, sales, grossProfit, netProfit) {
-            const ctx = document.getElementById('financeChart').getContext('2d');
-            
-            // Destroy existing chart if it exists
-            if (financeChart) {
-                financeChart.destroy();
-            }
-            
-            // Create new chart
-            financeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Expenses', 'Sales', 'Gross Profit', 'Net Profit'],
-                    datasets: [{
-                        label: 'Amount ($)',
-                        data: [expenses, sales, grossProfit, netProfit],
-                        backgroundColor: [
-                            'rgba(240, 173, 78, 0.7)',
-                            'rgba(74, 111, 165, 0.7)',
-                            'rgba(46, 139, 87, 0.7)',
-                            'rgba(40, 167, 69, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgb(240, 173, 78)',
-                            'rgb(74, 111, 165)',
-                            'rgb(46, 139, 87)',
-                            'rgb(40, 167, 69)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value;
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': $' + context.raw.toFixed(2);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Add entry to history
-        function addHistoryEntry(expenses, sales, grossProfit, netProfit) {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
-            const entry = {
-                date: dateStr,
-                expenses: expenses.toFixed(2),
-                sales: sales.toFixed(2),
-                grossProfit: grossProfit.toFixed(2),
-                netProfit: netProfit.toFixed(2),
-                status: netProfit >= 0 ? 'Profit' : 'Loss'
-            };
-            
-            financialData.history.unshift(entry);
-            
-            // Keep only last 10 entries
-            if (financialData.history.length > 10) {
-                financialData.history = financialData.history.slice(0, 10);
-            }
-            
-            saveData();
-            updateHistoryTable();
-        }
-        
-        // Update history table
-        function updateHistoryTable() {
-            const historyBody = document.getElementById('historyBody');
-            
-            if (financialData.history.length === 0) {
-                historyBody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="empty-state">
-                            <i class="fas fa-history"></i>
-                            <p>No financial records yet. Start by entering your expenses and sales data.</p>
-                        </td>
-                    </tr>
-                `;
+        function calculateProfitLoss() {
+            const totalQuails = parseFloat(document.getElementById('totalQuails').value) || 0;
+            const chickPrice = parseFloat(document.getElementById('chickPrice').value) || 0;
+            const feedQty = parseFloat(document.getElementById('feedQty').value) || 0;
+            const feedCost = parseFloat(document.getElementById('feedCost').value) || 0;
+            const quailsSold = parseFloat(document.getElementById('quailsSold').value) || 0;
+            const salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
+            const otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
+
+            if (quailsSold > totalQuails) {
+                alert('❌ Error: Quails sold cannot exceed total quail count!');
                 return;
             }
-            
-            historyBody.innerHTML = financialData.history.map(entry => `
-                <tr>
-                    <td>${entry.date}</td>
-                    <td>$${entry.expenses}</td>
-                    <td>$${entry.sales}</td>
-                    <td class="${parseFloat(entry.grossProfit) >= 0 ? 'positive' : 'negative'}">$${entry.grossProfit}</td>
-                    <td class="${parseFloat(entry.netProfit) >= 0 ? 'positive' : 'negative'}">$${entry.netProfit}</td>
-                    <td>
-                        <span class="${entry.status === 'Profit' ? 'positive' : 'negative'}">
-                            ${entry.status}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        }
-        
-        // Show alert message
-        function showAlert(alertElement, duration = 3000) {
-            alertElement.style.display = 'block';
-            setTimeout(() => {
-                alertElement.style.display = 'none';
-            }, duration);
-        }
-        
-        // Validate all inputs have valid numbers
-        function validateInputs() {
-            const expenseInputs = expenseForm.querySelectorAll('input');
-            const salesInputs = salesForm.querySelectorAll('input');
-            
-            const allInputs = [...expenseInputs, ...salesInputs];
-            
-            for (let input of allInputs) {
-                if (isNaN(parseFloat(input.value)) || parseFloat(input.value) < 0) {
-                    return false;
-                }
+
+            const totalChickCost = totalQuails * chickPrice;
+            const totalFeedCost = feedQty * feedCost;
+            const totalSales = quailsSold * salePrice;
+            const totalExpenses = totalChickCost + totalFeedCost + otherExpenses;
+            const netProfit = totalSales - totalExpenses;
+            const remainingStock = totalQuails - quailsSold;
+
+            document.getElementById('totalChickCost').textContent = `₹${totalChickCost.toFixed(2)}`;
+            document.getElementById('totalFeedCost').textContent = `₹${totalFeedCost.toFixed(2)}`;
+            document.getElementById('totalSales').textContent = `₹${totalSales.toFixed(2)}`;
+            document.getElementById('totalExpenses').textContent = `₹${totalExpenses.toFixed(2)}`;
+            document.getElementById('remainingStock').textContent = `${remainingStock} quails`;
+
+            const finalResult = document.getElementById('finalResult');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultAmount = document.getElementById('resultAmount');
+
+            if (netProfit >= 0) {
+                finalResult.className = 'final-result profit';
+                resultTitle.textContent = '✅ Net Profit';
+                resultAmount.textContent = `₹${netProfit.toFixed(2)}`;
+            } else {
+                finalResult.className = 'final-result loss';
+                resultTitle.textContent = '❌ Net Loss';
+                resultAmount.textContent = `₹${Math.abs(netProfit).toFixed(2)}`;
             }
-            
-            return true;
+
+            document.getElementById('resultsCard').classList.add('show');
         }
-        
-        // Load sample data
-        function loadSampleData() {
-            // Sample expense data
-            financialData.expenses = {
-                feedCost: 350,
-                chickCost: 200,
-                electricityCost: 120,
-                medicineCost: 85,
-                laborCost: 450,
-                otherExpenses: 100
-            };
-            
-            // Sample sales data
-            financialData.sales = {
-                liveQuails: 800,
-                eggSales: 650,
-                meatSales: 400,
-                otherSales: 150
-            };
-            
-            updateInputFields();
-            calculateFinancials();
-            
-            // Add sample history entries
-            const now = new Date();
-            const sampleDates = [
-                new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000),
-                new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000),
-                new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000),
-                new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000),
-                new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
-                new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000)
-            ];
-            
-            financialData.history = [];
-            
-            sampleDates.forEach((date, index) => {
-                const expenses = 1100 + Math.floor(Math.random() * 200);
-                const sales = 1800 + Math.floor(Math.random() * 400);
-                const grossProfit = sales - expenses;
-                const netProfit = grossProfit - (expenses * 0.1);
-                
-                financialData.history.push({
-                    date: date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                    expenses: expenses.toFixed(2),
-                    sales: sales.toFixed(2),
-                    grossProfit: grossProfit.toFixed(2),
-                    netProfit: netProfit.toFixed(2),
-                    status: netProfit >= 0 ? 'Profit' : 'Loss'
-                });
-            });
-            
-            saveData();
-            updateHistoryTable();
-            
-            showAlert(successAlert);
+
+        function resetForm() {
+            document.getElementById('quailForm').reset();
+            document.getElementById('feedQty').value = '';
+            document.getElementById('feedCost').value = '';
+            document.getElementById('otherExpenses').value = '';
+            document.getElementById('resultsCard').classList.remove('show');
         }
-        
-        // Reset all data
-        function resetAllData() {
-            if (confirm("Are you sure you want to reset all data? This action cannot be undone.")) {
-                // Reset expense data
-                financialData.expenses = {
-                    feedCost: 0,
-                    chickCost: 0,
-                    electricityCost: 0,
-                    medicineCost: 0,
-                    laborCost: 0,
-                    otherExpenses: 0
-                };
-                
-                // Reset sales data
-                financialData.sales = {
-                    liveQuails: 0,
-                    eggSales: 0,
-                    meatSales: 0,
-                    otherSales: 0
-                };
-                
-                // Clear history
-                financialData.history = [];
-                
-                updateInputFields();
-                calculateFinancials();
-                updateHistoryTable();
-                saveData();
-                
-                showAlert(successAlert);
-            }
-        }
-        
-        // Event Listeners
-        expenseForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!validateInputs()) {
-                showAlert(errorAlert);
-                return;
-            }
-            
-            // Save expense data
-            financialData.expenses.feedCost = parseFloat(document.getElementById('feedCost').value) || 0;
-            financialData.expenses.chickCost = parseFloat(document.getElementById('chickCost').value) || 0;
-            financialData.expenses.electricityCost = parseFloat(document.getElementById('electricityCost').value) || 0;
-            financialData.expenses.medicineCost = parseFloat(document.getElementById('medicineCost').value) || 0;
-            financialData.expenses.laborCost = parseFloat(document.getElementById('laborCost').value) || 0;
-            financialData.expenses.otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
-            
-            saveData();
-            calculateFinancials();
-            showAlert(successAlert);
-        });
-        
-        salesForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!validateInputs()) {
-                showAlert(errorAlert);
-                return;
-            }
-            
-            // Save sales data
-            financialData.sales.liveQuails = parseFloat(document.getElementById('liveQuails').value) || 0;
-            financialData.sales.eggSales = parseFloat(document.getElementById('eggSales').value) || 0;
-            financialData.sales.meatSales = parseFloat(document.getElementById('meatSales').value) || 0;
-            financialData.sales.otherSales = parseFloat(document.getElementById('otherSales').value) || 0;
-            
-            saveData();
-            calculateFinancials();
-            showAlert(successAlert);
-        });
-        
-        calculateBtn.addEventListener('click', function() {
-            if (!validateInputs()) {
-                showAlert(errorAlert);
-                return;
-            }
-            
-            // Save both expense and sales data
-            financialData.expenses.feedCost = parseFloat(document.getElementById('feedCost').value) || 0;
-            financialData.expenses.chickCost = parseFloat(document.getElementById('chickCost').value) || 0;
-            financialData.expenses.electricityCost = parseFloat(document.getElementById('electricityCost').value) || 0;
-            financialData.expenses.medicineCost = parseFloat(document.getElementById('medicineCost').value) || 0;
-            financialData.expenses.laborCost = parseFloat(document.getElementById('laborCost').value) || 0;
-            financialData.expenses.otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
-            
-            financialData.sales.liveQuails = parseFloat(document.getElementById('liveQuails').value) || 0;
-            financialData.sales.eggSales = parseFloat(document.getElementById('eggSales').value) || 0;
-            financialData.sales.meatSales = parseFloat(document.getElementById('meatSales').value) || 0;
-            financialData.sales.otherSales = parseFloat(document.getElementById('otherSales').value) || 0;
-            
-            const results = calculateFinancials();
-            addHistoryEntry(
-                results.totalExpenses, 
-                results.totalSales, 
-                results.grossProfit, 
-                results.netProfit
-            );
-            
-            saveData();
-            showAlert(successAlert);
-        });
-        
-        loadSampleBtn.addEventListener('click', loadSampleData);
-        resetBtn.addEventListener('click', resetAllData);
-        
-        // Set current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        
-        // Initialize the application
-        loadData();
-        calculateFinancials();
     </script>
 </body>
 </html>
